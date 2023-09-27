@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">App Ejemplo del Profe</string>
+    <string name="title_name">Hello World</string>
+    <string name="button_quit">Salir</string>
+</resources>
