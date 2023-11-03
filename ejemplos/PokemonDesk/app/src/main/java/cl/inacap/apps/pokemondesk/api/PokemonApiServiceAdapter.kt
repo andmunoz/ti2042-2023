@@ -12,8 +12,8 @@ class PokemonApiServiceAdapter {
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
-    fun getPokemonList(): PokemonListResponse? {
-        val call = pokemonApi.create(PokemonApiService::class.java).getPokemonList().execute()
+    fun getPokemonList(offset: Int = 0, limit: Int = 20): PokemonListResponse? {
+        val call = pokemonApi.create(PokemonApiService::class.java).getPokemonList(offset, limit).execute()
         return call.body()
     }
 
