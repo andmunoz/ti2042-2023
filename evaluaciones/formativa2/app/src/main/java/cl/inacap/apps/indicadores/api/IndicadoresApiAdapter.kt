@@ -10,9 +10,11 @@ class IndicadoresApiAdapter {
         .baseUrl(URL_BASE)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
+
     fun getIndicador(tipo:String, fecha:String): IndicadorResponse? {
         var call = indicadoresApi.create(IndicadoresApi::class.java)
             .getIndicador(tipo, fecha).execute()
+        println(call.toString())
         return call.body()
     }
 }

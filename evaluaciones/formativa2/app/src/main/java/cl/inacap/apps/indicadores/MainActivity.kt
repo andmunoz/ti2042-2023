@@ -27,19 +27,23 @@ class MainActivity : AppCompatActivity() {
 
         runBlocking {
             showIndicador("dolar", dolarField)
-            showIndicador("euro", euroField)
+            /* showIndicador("euro", euroField)
             showIndicador("uf", ufField)
-            showIndicador("utm", utmField)
+            showIndicador("utm", utmField) */
         }
     }
 
     private suspend fun showIndicador(tipo: String, field: EditText) {
+        println("Calling service")
         val indicadorResponse = GlobalScope.async {
             indicadoresApi.getIndicador(tipo, "03-11-2023")
         }
+        println("Waiting response")
         val indicador = indicadorResponse.await()
         val unidadMedida = indicador?.unidadMedida
-        val valor = indicador?.serie?.get(0)?.get("valor")
+        println(unidadMedida)
+        val valor = indicador?.serie?.get(0)?.valor.toString()
+        println(valor)
         field.setText("${valor} ${unidadMedida}")
     }
 }
