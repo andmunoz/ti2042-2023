@@ -55,8 +55,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
         // Put in adapter and show in spinner
         val arrayAdapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, pokemonArray)
-        with(pokemonSelector)
-        {
+        with(pokemonSelector) {
             adapter = arrayAdapter
             setSelection(0, false)
             onItemSelectedListener = this@MainActivity
