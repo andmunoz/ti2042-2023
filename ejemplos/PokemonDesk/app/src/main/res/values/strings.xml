@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Pokemon Desk</string>
+    <string name="pokemon_selector">Selecciona un Pokémon</string>
+    <string name="pokemon_name">Nombre</string>
+    <string name="pokemon_weight">Peso (libras)</string>
+    <string name="pokemon_height">Tamaño (Pulgadas)</string>
+</resources>
