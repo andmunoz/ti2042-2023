@@ -7,6 +7,8 @@ import cl.inacap.apps.indicadores.api.IndicadoresApiAdapter
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
+import java.lang.Float.parseFloat
+import java.text.DecimalFormat
 
 class MainActivity : AppCompatActivity() {
     lateinit var dolarField: EditText
@@ -15,6 +17,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var utmField: EditText
 
     private var indicadoresApi = IndicadoresApiAdapter()
+    private var decimalFormat: DecimalFormat = DecimalFormat("#,###.00")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,9 +30,9 @@ class MainActivity : AppCompatActivity() {
 
         runBlocking {
             showIndicador("dolar", dolarField)
-            /* showIndicador("euro", euroField)
+            showIndicador("euro", euroField)
             showIndicador("uf", ufField)
-            showIndicador("utm", utmField) */
+            showIndicador("utm", utmField)
         }
     }
 
@@ -40,10 +43,10 @@ class MainActivity : AppCompatActivity() {
         }
         println("Waiting response")
         val indicador = indicadorResponse.await()
+        val nombre = indicador?.nombre
         val unidadMedida = indicador?.unidadMedida
-        println(unidadMedida)
-        val valor = indicador?.serie?.get(0)?.valor.toString()
-        println(valor)
-        field.setText("${valor} ${unidadMedida}")
+        val valor = parseFloat(indicador?.serie?.get(0)?.valor.toString())
+        println("1 ${nombre} = ${valor} ${unidadMedida}")
+        field.setText("${decimalFormat.format(valor)} ${unidadMedida}")
     }
 }
