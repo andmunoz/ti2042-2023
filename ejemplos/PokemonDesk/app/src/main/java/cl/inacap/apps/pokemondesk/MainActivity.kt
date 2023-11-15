@@ -45,12 +45,12 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     private suspend fun populateSpinner() {
         // Get names of first 50th pokemon
         val pokemonListResponse = GlobalScope.async(Dispatchers.IO) {
-            pokemonAdapter.getPokemonList(limit = 20)
+            pokemonAdapter.getPokemonList(limit = 50)
         }
 
         // Create an array with only names of pokemon
         pokemonListResponse.await()?.results?.forEach() { pokemon ->
-            pokemon["name"]?.let { pokemonName -> pokemonArray.add(pokemonName) }
+            pokemon.name?.let { pokemonName -> pokemonArray.add(pokemonName) }
         }
 
         // Put in adapter and show in spinner
