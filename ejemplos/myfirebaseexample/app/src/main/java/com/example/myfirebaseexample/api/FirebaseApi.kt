@@ -9,6 +9,9 @@ import retrofit2.http.POST
 import retrofit2.http.Path
 
 interface FirebaseApi {
+    @GET("Armas.json")
+    fun getWeapons(): Call<MutableMap<String, WeaponResponse>>
+
     @GET("Armas/{id}.json")
     fun getWeapon(
         @Path("id") id: String
