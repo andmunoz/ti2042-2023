@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import com.example.myfirebaseexample.api.FirebaseApiAdapter
 import com.example.myfirebaseexample.api.response.WeaponResponse
 import kotlinx.coroutines.GlobalScope
@@ -31,13 +32,26 @@ class MainActivity : AppCompatActivity() {
         nameField = findViewById(R.id.nameField)
         damageField = findViewById(R.id.damangeField)
         costField = findViewById(R.id.costField)
-        buttonSave = findViewById(R.id.buttonSave)
-        buttonLoad = findViewById(R.id.buttonLoad)
 
-        runBlocking {
-            // getWeaponFromApi("312")
-            val weapon = WeaponResponse(name = "Pistola de Agua", damage = "0", cost = 1)
-            sendWeaponToApi(weapon)
+        buttonLoad = findViewById(R.id.buttonLoad)
+        buttonLoad.setOnClickListener {
+            Toast.makeText(this, "Cargando información", Toast.LENGTH_SHORT).show()
+            val weaponId = idField.text.toString()
+            runBlocking {
+                getWeaponFromApi(weaponId)
+            }
+        }
+
+        buttonSave = findViewById(R.id.buttonSave)
+        buttonSave.setOnClickListener {
+            Toast.makeText(this, "Guardando información", Toast.LENGTH_SHORT).show()
+            val weaponName = nameField.text.toString()
+            val damage = damageField.text.toString()
+            val cost = costField.text.toString().toLong()
+            runBlocking {
+                val weapon = WeaponResponse("", weaponName, damage, cost)
+                sendWeaponToApi(weapon)
+            }
         }
     }
 
@@ -57,7 +71,7 @@ class MainActivity : AppCompatActivity() {
             firebaseApi.setWeapon(weapon)
         }
         val weapon = weaponResponse.await()
-        idField.setText("New")
+        idField.setText(weapon?.id)
         nameField.setText(weapon?.name)
         damageField.setText(weapon?.damage)
         costField.setText("${weapon?.cost}")

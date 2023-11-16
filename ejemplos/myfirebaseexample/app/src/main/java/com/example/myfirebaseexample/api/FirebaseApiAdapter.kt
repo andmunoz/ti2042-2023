@@ -13,11 +13,15 @@ class FirebaseApiAdapter {
 
     fun getWeapon(id: String): WeaponResponse? {
         val call = firebaseApi.create(FirebaseApi::class.java).getWeapon(id).execute()
-        return call.body()
+        val weapon = call.body()
+        weapon?.id = id
+        return weapon
     }
 
     fun setWeapon(weapon: WeaponResponse): WeaponResponse? {
         val call = firebaseApi.create(FirebaseApi::class.java).setWeapon(weapon).execute()
+        val results = call.body()
+        weapon.id = results?.id.toString()
         return weapon
     }
 }

@@ -1,5 +1,6 @@
 package com.example.myfirebaseexample.api
 
+import com.example.myfirebaseexample.api.response.PostResponse
 import com.example.myfirebaseexample.api.response.WeaponResponse
 import retrofit2.Call
 import retrofit2.http.Body
@@ -16,5 +17,5 @@ interface FirebaseApi {
     @POST("Armas.json")
     fun setWeapon(
         @Body() body: WeaponResponse
-    ): Call<WeaponResponse>
+    ): Call<PostResponse>
 }
