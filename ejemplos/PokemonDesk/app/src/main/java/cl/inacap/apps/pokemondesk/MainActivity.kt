@@ -13,7 +13,6 @@ import cl.inacap.apps.pokemondesk.api.PokemonApiServiceAdapter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
 class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
@@ -32,7 +31,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         setContentView(R.layout.activity_main)
 
         // Set widgets with screen objects
-        pokemonSelector = findViewById<Spinner>(R.id.pokemon_selector)
+        pokemonSelector = findViewById(R.id.pokemon_selector)
         pokemonNameText = findViewById(R.id.pokemon_name_label)
         pokemonWeightText = findViewById(R.id.pokemon_weight_label)
         pokemonHeightText = findViewById(R.id.pokemon_height_label)
@@ -49,12 +48,12 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         }
 
         // Create an array with only names of pokemon
-        pokemonListResponse.await()?.results?.forEach() { pokemon ->
+        pokemonListResponse.await()?.results?.forEach { pokemon ->
             pokemon["name"]?.let { pokemonName -> pokemonArray.add(pokemonName) }
         }
 
         // Put in adapter and show in spinner
-        val arrayAdapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, pokemonArray)
+        val arrayAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, pokemonArray)
         with(pokemonSelector) {
             adapter = arrayAdapter
             setSelection(0, false)
