@@ -14,7 +14,8 @@ class MainActivity : AppCompatActivity() {
 
     // Declaramos un objeto que representa la conexión MQTT
     private lateinit var mqttClient: MqttClientHelper
-    private val topic = MqttClientHelper.SENSOR_TOPIC
+    private val sensorTopic = MqttClientHelper.SENSOR_TOPIC
+    private val deviceTopic = MqttClientHelper.DEVICE_TOPIC
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,13 +31,16 @@ class MainActivity : AppCompatActivity() {
         messageView.append("OK!\n")
 
         // Suscribimos al tópico y enviamos el primer mensaje
-        mqttClient.subscribeToTopic(topic, messageView)
-        mqttClient.publishMessage(topic, "Service is Online!")
+        mqttClient.subscribeToTopic(sensorTopic, messageView)
+        mqttClient.publishMessage(sensorTopic, "Sensor is Online!")
+
+        mqttClient.subscribeToTopic(deviceTopic, messageView)
+        mqttClient.publishMessage(deviceTopic, "Device is Online!")
 
         // Construimos la lógica cuando se presiona "Enviar"
         sendButton.setOnClickListener {
             messageView.append("Sending Message...\n")
-            mqttClient.publishMessage(topic, messageText.text.toString())
+            mqttClient.publishMessage(sensorTopic, messageText.text.toString())
         }
     }
 

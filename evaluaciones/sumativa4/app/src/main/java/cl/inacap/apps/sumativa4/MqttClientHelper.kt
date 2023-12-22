@@ -1,6 +1,6 @@
-package cl.inacap.apps.mqttexample
+package cl.inacap.apps.sumativa4
 
-import android.widget.TextView
+import android.widget.RadioButton
 import org.eclipse.paho.client.mqttv3.MqttClient
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions
 import org.eclipse.paho.client.mqttv3.MqttException
@@ -34,11 +34,25 @@ class MqttClientHelper {
     }
 
     // Acción de suscribirse a un tópico
-    fun subscribeToTopic(topic: String, messageView: TextView) {
+    fun subscribeToTopic(topic: String, radioButtons: List<RadioButton>) {
         try {
             mqttClient.subscribe(topic) { _, message ->
                 val payload = String(message.payload)
-                messageView.append("[$topic] $payload\n")
+                if (payload.indexOf("RED") == 0) {
+                    radioButtons[0].isChecked = false
+                    radioButtons[1].isChecked = false
+                    radioButtons[2].isChecked = true
+                }
+                else if (payload.indexOf("YELLOW") == 0) {
+                    radioButtons[0].isChecked = false
+                    radioButtons[1].isChecked = true
+                    radioButtons[2].isChecked = false
+                }
+                else {
+                    radioButtons[0].isChecked = true
+                    radioButtons[1].isChecked = false
+                    radioButtons[2].isChecked = false
+                }
                 println("[$topic] Mensaje recibido: $payload")
             }
         } catch (e: MqttException) {
