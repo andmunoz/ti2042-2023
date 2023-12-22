@@ -13,7 +13,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var dehumidifyButton: Button
     private lateinit var offButton: Button
 
-    private var mqttClient = MqttClientHelper()
+    private lateinit var mqttClient: MqttClientHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,6 +26,8 @@ class MainActivity : AppCompatActivity() {
         statusRadioButtonList.add(greenStatusRadio)
         statusRadioButtonList.add(yellowStatusRadio)
         statusRadioButtonList.add(redStatusRadio)
+
+        mqttClient = MqttClientHelper()
         mqttClient.subscribeToTopic(MqttClientHelper.SENSOR_TOPIC, statusRadioButtonList)
 
         humidifyButton = findViewById(R.id.humidifyButton)
