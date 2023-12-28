@@ -28,19 +28,17 @@ class MainActivity : AppCompatActivity() {
 
         // Creamos la referencia al cliente MQTT
         mqttClient = MqttClientHelper()
-        messageView.append("OK!\n")
+        messageView.append(" OK!\n")
 
         // Suscribimos al tópico y enviamos el primer mensaje
-        mqttClient.subscribeToTopic(sensorTopic, messageView)
-        mqttClient.publishMessage(sensorTopic, "Sensor is Online!")
-
+        mqttClient.publishMessage(sensorTopic, "GREEN+")
         mqttClient.subscribeToTopic(deviceTopic, messageView)
-        mqttClient.publishMessage(deviceTopic, "Device is Online!")
 
         // Construimos la lógica cuando se presiona "Enviar"
         sendButton.setOnClickListener {
-            messageView.append("Sending Message...\n")
+            messageView.append("Sending Message to $sensorTopic... ")
             mqttClient.publishMessage(sensorTopic, messageText.text.toString())
+            messageView.append("OK!\n")
         }
     }
 

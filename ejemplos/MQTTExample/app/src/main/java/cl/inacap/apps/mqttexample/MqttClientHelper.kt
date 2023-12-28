@@ -14,8 +14,8 @@ class MqttClientHelper {
 
     // Aquí se definen los tópico para el intercambio de mensajes
     companion object {
-        const val SENSOR_TOPIC = "sensorTopic"  // Tópico para el sensor
-        const val DEVICE_TOPIC = "deviceTopic"  // Tópico para el dispositivo
+        const val SENSOR_TOPIC = "SensorTopic"  // Tópico para el sensor
+        const val DEVICE_TOPIC = "DeviceTopic"  // Tópico para el dispositivo
     }
 
     // Declaramos e inicializamos la instancia con el servidor MQTT
@@ -23,11 +23,13 @@ class MqttClientHelper {
     init { connectToMqttBroker() }
     private fun connectToMqttBroker() {
         try {
+            print("Connecting to $SERVER_URI... ")
             val persistence = MemoryPersistence()
             mqttClient = MqttClient(SERVER_URI, CLIENT_ID, persistence)
             val options = MqttConnectOptions()
             options.isCleanSession = true
             mqttClient.connect(options)
+            println("OK!")
         } catch (e: MqttException) {
             e.printStackTrace()
         }
@@ -36,11 +38,13 @@ class MqttClientHelper {
     // Acción de suscribirse a un tópico
     fun subscribeToTopic(topic: String, messageView: TextView) {
         try {
+            print("[$topic] Subscribing to topic... ")
             mqttClient.subscribe(topic) { _, message ->
                 val payload = String(message.payload)
                 messageView.append("[$topic] $payload\n")
-                println("[$topic] Mensaje recibido: $payload")
+                println("[$topic] Message received: $payload")
             }
+            println("OK!")
         } catch (e: MqttException) {
             e.printStackTrace()
         }
@@ -49,8 +53,10 @@ class MqttClientHelper {
     // Acción que envía un mensaje a un tópico
     fun publishMessage(topic: String, message: String) {
         try {
+            print("[$topic] Sending Message: $message... ")
             val mqttMessage = MqttMessage(message.toByteArray())
             mqttClient.publish(topic, mqttMessage)
+            println("OK!")
         } catch (e: MqttException) {
             e.printStackTrace()
         }
@@ -58,6 +64,8 @@ class MqttClientHelper {
 
     // Cerramos la conexión con el servicio MQTT
     fun disconnect() {
+        print("Disconnecting from $SERVER_URI... ")
         mqttClient.disconnect()
+        println("OK!")
     }
 }

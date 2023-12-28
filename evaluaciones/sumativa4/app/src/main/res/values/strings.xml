@@ -7,4 +7,7 @@
     <string name="humidifyButtonText">Humidificar</string>
     <string name="dehumidifyButtonText">Deshumidificar</string>
     <string name="offButtonText">Apagar</string>
+    <string name="offStatusText">Dispositivo Apagado</string>
+    <string name="humidificateStatusText">Dispositivo Humidificando</string>
+    <string name="dehumidificateStatusText">Dispositivo Deshumidificando</string>
 </resources>
